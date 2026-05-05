@@ -50,6 +50,10 @@ Three GitHub Actions workflows in a single public repo, sharing a Python module 
 
 Each workflow declares a `concurrency:` group keyed by the workflow name so two runs cannot race on the same state file. Push conflicts during commit are resolved by a single pull-rebase-retry; failure after that is loud.
 
+### Timezone handling
+
+All date and hour computations use Python's standard-library `zoneinfo.ZoneInfo("America/Chicago")` (Python 3.12). UTC is used for all `*_at` ISO timestamps; Chicago-local dates are used for all `*_on` and `*_date` fields and for the local-hour gate.
+
 ## Repo layout
 
 ```
@@ -101,15 +105,27 @@ timezone: America/Chicago
 ```json
 {
   "current_book_id": 12345,
+  "current_book_started_on": "2026-05-01",
   "position": 24,
   "last_send_date": "2026-05-04",
   "picker_email_sent_on": null,
+  "bootstrap_consumed": true,
   "history": [
     {
       "book_id": 9876,
       "started": "2026-04-01",
       "finished": "2026-04-30",
-      "highlight_count": 47
+      "highlight_count": 47,
+      "outcome": "completed"
+    },
+    {
+      "book_id": 5555,
+      "started": "2026-03-15",
+      "finished": null,
+      "abandoned_at": "2026-04-01",
+      "position_at_abandon": 12,
+      "highlight_count": 60,
+      "outcome": "abandoned"
     }
   ]
 }
@@ -118,10 +134,12 @@ timezone: America/Chicago
 Fields:
 
 - `current_book_id` — Readwise book id, or `null` between books.
+- `current_book_started_on` — ISO date in Chicago timezone when the current book was selected. `null` when no current book.
 - `position` — index of the next highlight to send within the snapshot. Range `[0, total_highlights]`. Equals `total_highlights` only momentarily before the finishing email rolls the book to history.
 - `last_send_date` — ISO date in Chicago timezone of the most recent successful send. Used for daily-run idempotency.
 - `picker_email_sent_on` — ISO date in Chicago timezone, or `null`. Set when a picker email is sent so it does not re-send daily. Cleared when a book is selected.
-- `history` — append-only log of completed cycles. `finished` is `null` for abandoned cycles (user selected a new book mid-cycle); in that case an `abandoned_at` and `position_at_abandon` are recorded instead.
+- `bootstrap_consumed` — boolean. Set to `true` after the daily script consumes `config.bootstrap_book_id` for the first time; prevents re-bootstrapping later when the user finishes a book and `current_book_id` returns to `null`.
+- `history` — append-only log of cycles. Each entry has `outcome: "completed"` (with `finished` set, `abandoned_at: null`) or `outcome: "abandoned"` (with `finished: null`, `abandoned_at` and `position_at_abandon` set).
 
 ### `data/books.json`
 
@@ -170,10 +188,13 @@ Highlights are pre-sorted by `(location, id)` at snapshot time. The daily script
 3. If current Chicago hour != 7, exit 0 (the other cron time will fire later or did already).
 4. If state.last_send_date == today_chicago, exit 0 (already sent today).
 5. Branch:
-   a. current_book_id is null AND config.bootstrap_book_id is set:
-      - Treat as if the user just selected bootstrap_book_id:
-        snapshot it, set current_book_id, clear bootstrap_book_id in config,
-        position = 0, then continue to (c).
+   a. current_book_id is null AND config.bootstrap_book_id is set
+      AND state.bootstrap_consumed is false:
+      - Snapshot config.bootstrap_book_id (calls Readwise highlights API,
+        sorts by (location, id), writes data/highlights/<id>.json).
+      - Set current_book_id = bootstrap_book_id, current_book_started_on = today_chicago,
+        position = 0, bootstrap_consumed = true.
+      - Fall through to branch (d) (send first batch of highlights immediately).
    b. current_book_id is null AND picker_email_sent_on != null:
       - Exit 0 (user has not selected a book yet; we already prompted).
    c. current_book_id is null AND picker_email_sent_on is null:
@@ -190,8 +211,10 @@ Highlights are pre-sorted by `(location, id)` at snapshot time. The daily script
       - Render highlights email (finishing variant if is_finishing).
       - Send.
       - If is_finishing:
-          push current book to history with finished = today_chicago.
-          set current_book_id = null, position = 0.
+          push current book to history with outcome = "completed",
+            started = current_book_started_on, finished = today_chicago,
+            highlight_count = len(highlights).
+          set current_book_id = null, current_book_started_on = null, position = 0.
           set picker_email_sent_on = today_chicago.
         else:
           position += len(slice).
@@ -203,22 +226,27 @@ Highlights are pre-sorted by `(location, id)` at snapshot time. The daily script
 ## Selection logic (`select.py`)
 
 ```
+0. Compute today_chicago.
 1. Read GitHub event payload from $GITHUB_EVENT_PATH.
 2. Validate issue.user.login == repository_owner. If not, exit 0 silently.
 3. Validate issue.title startswith "select-book:". If not, exit 0 silently.
 4. Parse book_id from title (format: "select-book: <id>"). On parse failure,
    comment "Could not parse book_id. Expected title format: select-book: <id>",
    close the issue, exit 0.
-5. Load books.json. If book_id not found, refresh books.json once and re-check.
+5. If state.current_book_id == book_id: comment "Already on this book.",
+   close, exit 0. (Idempotency short-circuit before any API calls.)
+6. Load books.json. If book_id not found, refresh books.json once and re-check.
    If still not found, comment "Book id not found in your Readwise library.",
    close, exit 0.
-6. Fetch all highlights for book_id from Readwise. If 0 highlights, comment
-   "This book has no highlights." close, exit 0.
-7. Sort by (location, id), write data/highlights/<book_id>.json.
-8. If state.current_book_id is set and != book_id: push old book to history with
-   finished = null, abandoned_at = today_chicago, position_at_abandon = position.
-9. If state.current_book_id == book_id: comment "Already on this book." close, exit 0.
-10. Update state: current_book_id = book_id, position = 0, picker_email_sent_on = null.
+7. Fetch all highlights for book_id from Readwise. If 0 highlights, comment
+   "This book has no highlights.", close, exit 0.
+8. Sort by (location, id), write data/highlights/<book_id>.json.
+9. If state.current_book_id is set and != book_id: push old book to history
+   with outcome = "abandoned", started = current_book_started_on,
+   finished = null, abandoned_at = today_chicago, position_at_abandon = position,
+   highlight_count = (length of old book's snapshot).
+10. Update state: current_book_id = book_id, current_book_started_on = today_chicago,
+    position = 0, picker_email_sent_on = null.
 11. Refresh books.json (so num_highlights is current for the new book).
 12. Commit (state + new snapshot + maybe books.json).
 13. Comment on the issue: "Selected <title> by <author>. <N> highlights queued.
@@ -322,7 +350,7 @@ The default `GITHUB_TOKEN` provided by GitHub Actions is sufficient for committi
 
 ### CI
 
-- `tests.yml` runs the unit suite on every push and PR using a matrix of Python 3.12 only initially.
+- `tests.yml` runs the unit suite on every push and PR with Python 3.12.
 - Integration tests are gated behind a `pytest -m integration` marker and run manually.
 
 ### Local dev affordances
