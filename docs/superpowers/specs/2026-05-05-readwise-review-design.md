@@ -84,6 +84,113 @@ pyproject.toml
 README.md
 ```
 
+## Readwise API integration
+
+### Setup (one-time, by the user)
+
+1. Visit `https://readwise.io/access_token` while signed in to Readwise.
+2. Copy the access token shown on that page.
+3. In the GitHub repo: **Settings → Secrets and variables → Actions → New repository secret**, name `READWISE_TOKEN`, value = the token from step 2.
+
+The token is sent on every API request as an HTTP header:
+
+```
+Authorization: Token <READWISE_TOKEN>
+```
+
+### Endpoints used
+
+The system uses three Readwise API v2 endpoints. All return JSON; all require the `Authorization` header above.
+
+**1. `GET /api/v2/auth/` — token validation**
+
+Returns `204 No Content` if the token is valid; `401` otherwise. Used once at the start of every workflow run as a fail-fast check, so a bad/revoked token surfaces clearly in the workflow log instead of producing confusing downstream errors.
+
+**2. `GET /api/v2/books/` — list books**
+
+Used by `refresh.py` to populate `data/books.json`.
+
+Query parameters we send:
+- `category=books` — filter to the books category only (excludes articles, tweets, podcasts, supplementals).
+- `page_size=1000` — the max. Most libraries fit in a single page.
+- `page=N` — incremented while the response's `next` field is non-null.
+
+Response fields we read from each item in `results[]`:
+
+| Readwise field | Used as |
+|---|---|
+| `id` | `books[].id` in `data/books.json` |
+| `title` | `books[].title` |
+| `author` | `books[].author` (may be `null`; treat as empty string for rendering) |
+| `num_highlights` | `books[].num_highlights`; we filter out books where this is `0` |
+
+All other fields (`category`, `source`, `cover_image_url`, `tags`, etc.) are ignored.
+
+**3. `GET /api/v2/highlights/` — list highlights for a book**
+
+Used by `select.py` to snapshot all highlights for the just-selected book.
+
+Query parameters we send:
+- `book_id=<id>` — the selected book's id.
+- `page_size=1000` — the max.
+- `page=N` — incremented while the response's `next` is non-null.
+
+Response fields we read from each item in `results[]`:
+
+| Readwise field | Used as |
+|---|---|
+| `id` | `highlights[].id` in the snapshot file |
+| `text` | `highlights[].text` |
+| `location` | `highlights[].location` (integer, may be `null`) |
+| `location_type` | `highlights[].location_type` (string, e.g., `"page"`, `"location"`, `"order"`) |
+| `note` | `highlights[].note` (may be empty string) |
+| `highlighted_at` | `highlights[].highlighted_at` (ISO 8601 string, may be `null`) |
+| `book_id` | sanity-checked against the requested book id |
+
+After fetching all pages, the highlights are sorted by `(location, id)`. Highlights with `location is null` are placed at the end, ordered by `id`, so the system never crashes on a book with missing location data.
+
+### Why not `/api/v2/export/`?
+
+The export endpoint is recommended for bulk sync and returns books + nested highlights in one response. It would conflate two concerns we want separate (refreshing the book list vs snapshotting one book's highlights), and it would re-fetch highlights for every book on every refresh. The narrower `/books/` and `/highlights/?book_id=X` endpoints match our access pattern: the book list is fetched weekly, and a book's highlights are fetched only when that book is selected.
+
+### Pagination strategy
+
+Both endpoints we use are offset-based with `next` URLs in the response. The client implements a simple loop:
+
+```python
+def paged_get(url, params):
+    while url:
+        response = http.get(url, headers=auth_headers(), params=params)
+        response.raise_for_status()
+        body = response.json()
+        yield from body["results"]
+        url = body["next"]
+        params = None  # next URL already encodes its own params
+```
+
+### Rate limits and retry
+
+Readwise's documented limits:
+- 240 requests/minute per token in general
+- 20 requests/minute for LIST endpoints (`/books/` and `/highlights/`)
+
+Our access pattern stays comfortably under these:
+- `refresh.py` makes 1–2 paged LIST calls per week (most libraries fit on one page).
+- `select.py` makes 1–2 paged LIST calls per book selection (~weekly).
+- `daily.py` makes zero Readwise calls in the highlights branch (snapshots are local), and only fires `refresh.py` inline on finishing days and picker days.
+
+The HTTP client wraps each call with retry logic:
+- On `429`: read the `Retry-After` header (seconds), sleep that long, retry once. If still `429`, fail.
+- On `5xx`: exponential backoff, up to 3 attempts (1s, 4s, 16s).
+- On other `4xx`: fail immediately and surface the response body in the workflow log.
+- On network errors: retry up to 3 times with the same backoff as `5xx`.
+
+### Failure surfaces
+
+- **In `daily.py`**: Readwise failures only matter on finishing days and picker days (when an inline refresh is needed). The workflow exits non-zero, no email is sent, no state is changed; tomorrow's run will retry.
+- **In `select.py`**: Readwise failure leaves the issue *open* with an error comment, so re-opening (or just commenting) does not need any rework — the user can wait and re-trigger by closing and reopening, or by submitting a fresh issue.
+- **In `refresh.py`**: workflow fails loudly. Books.json is unchanged. The next scheduled refresh tries again.
+
 ## Configuration
 
 `config.yaml` is the only user-editable runtime configuration:
