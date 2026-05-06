@@ -49,8 +49,34 @@ def run(
     if state.last_send_date == today:
         return
 
-    # Branches a/b/c/d come in subsequent tasks.
-    return
+    # 5b. No current book, picker already sent → silence.
+    if state.current_book_id is None and state.picker_email_sent_on is not None:
+        return
+
+    # 5c. No current book, no picker sent → send picker email.
+    if state.current_book_id is None:
+        from readwise_review.email_render import render_picker_email
+        from readwise_review.refresh import run as refresh_books_run
+
+        refresh_books_run(client=client, data_dir=data_dir, commit_fn=commit_fn)
+        books_file = load_books(data_dir / "books.json")
+        rendered = render_picker_email(books=books_file.books, repo=repo)
+        send_email_fn(
+            rendered,
+            from_email=config.from_email,
+            to_email=config.to_email,
+            gmail_app_password=gmail_app_password,
+        )
+        new_state = replace(state, picker_email_sent_on=today, last_send_date=today)
+        save_state(new_state, data_dir / "state.json")
+        commit_fn(
+            f"daily: send picker email for {today.isoformat()}",
+            ["data/state.json", "data/books.json"],
+            None,
+        )
+        return
+
+    # 5d. Current book set → highlights / finishing branch (next task)
 
 
 def main() -> None:
