@@ -123,3 +123,14 @@ def test_highlight_with_no_location_renders_no_caption() -> None:
         repo="user/repo",
     )
     assert "None" not in email.html
+
+
+def test_picker_books_sorted_alphabetically_regardless_of_input_order() -> None:
+    books_unsorted = [
+        BookEntry(id=99, title="The Beginning of Infinity", author="David Deutsch", num_highlights=87),
+        BookEntry(id=42, title="Antifragile", author="Nassim Taleb", num_highlights=54),
+    ]
+    email = render_picker_email(books=books_unsorted, repo="user/repo")
+    a_index = email.html.find("Antifragile")
+    b_index = email.html.find("The Beginning of Infinity")
+    assert a_index < b_index

@@ -62,6 +62,7 @@ def render_highlights_email(
 ) -> RenderedEmail:
     position_end = position_start + len(highlights)
     remaining = total_in_book - position_end
+    sorted_books = sorted(all_books, key=lambda b: b.title)
     ctx = {
         "book": book,
         "highlights": highlights,
@@ -70,7 +71,7 @@ def render_highlights_email(
         "total_in_book": total_in_book,
         "remaining": remaining,
         "is_finishing": is_finishing,
-        "all_books": all_books,
+        "all_books": sorted_books,
         "repo": repo,
     }
     subject = f"Readwise: {book.title} — {position_start + 1}–{position_end} of {total_in_book}"
@@ -80,7 +81,8 @@ def render_highlights_email(
 
 
 def render_picker_email(*, books: list[BookEntry], repo: str) -> RenderedEmail:
-    ctx = {"books": books, "repo": repo}
+    sorted_books = sorted(books, key=lambda b: b.title)
+    ctx = {"books": sorted_books, "repo": repo}
     subject = "Readwise: pick a book to review"
     html = _env.get_template("picker.html.j2").render(**ctx)
     plain = _env.get_template("picker.txt.j2").render(**ctx)
