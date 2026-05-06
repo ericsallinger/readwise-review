@@ -26,3 +26,5 @@ python -m venv .venv
 ```
 
 Integration tests (network) are gated behind `pytest -m integration`.
+
+Made May 2026 using claude code ~4.5 various models + superpowers plugin
