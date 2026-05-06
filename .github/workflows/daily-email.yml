@@ -1,0 +1,30 @@
+name: Daily email
+
+on:
+  schedule:
+    - cron: '0 12 * * 1-5'   # 7am CDT / 6am CST
+    - cron: '0 13 * * 1-5'   # 8am CDT / 7am CST
+  workflow_dispatch:
+
+concurrency:
+  group: daily-email
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -e .
+      - run: python -m readwise_review.daily
+        env:
+          READWISE_TOKEN: ${{ secrets.READWISE_TOKEN }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
