@@ -1,4 +1,539 @@
 {
-  "fetched_at": null,
-  "books": []
+  "fetched_at": "2026-05-06T22:19:18Z",
+  "books": [
+    {
+      "id": 1563373,
+      "title": "\"Surely You're Joking, Mr. Feynman!\"",
+      "author": "Richard P. Feynman, Ralph Leighton, Edward Hutchings, and Albert R. Hibbs",
+      "num_highlights": 39
+    },
+    {
+      "id": 823916,
+      "title": "1984",
+      "author": "George Orwell",
+      "num_highlights": 2
+    },
+    {
+      "id": 823915,
+      "title": "A Brief History of Time",
+      "author": "Stephen Hawking",
+      "num_highlights": 33
+    },
+    {
+      "id": 5981073,
+      "title": "A Place of My Own",
+      "author": "Michael Pollan",
+      "num_highlights": 5
+    },
+    {
+      "id": 1569202,
+      "title": "Algorithms to Live By",
+      "author": "Brian Christian, Tom Griffiths",
+      "num_highlights": 27
+    },
+    {
+      "id": 8646034,
+      "title": "Ask Iwata",
+      "author": "Satoru Iwata, Hobonichi, and Sam Bett",
+      "num_highlights": 26
+    },
+    {
+      "id": 10691360,
+      "title": "Assata",
+      "author": "Assata Shakur and Angela Davis",
+      "num_highlights": 4
+    },
+    {
+      "id": 17694181,
+      "title": "Being Mortal",
+      "author": "Atul Gawande",
+      "num_highlights": 15
+    },
+    {
+      "id": 3719305,
+      "title": "Black Man in a White Coat",
+      "author": "Damon Tweedy",
+      "num_highlights": 43
+    },
+    {
+      "id": 42050479,
+      "title": "Caste",
+      "author": "Isabel Wilkerson",
+      "num_highlights": 17
+    },
+    {
+      "id": 36975654,
+      "title": "Chain Gang All Stars",
+      "author": "Nana Kwame Adjei-Brenyah",
+      "num_highlights": 6
+    },
+    {
+      "id": 58644289,
+      "title": "Change the Recipe",
+      "author": "Jos\u00e9 Andr\u00e9s and Richard Wolffe",
+      "num_highlights": 14
+    },
+    {
+      "id": 57417818,
+      "title": "Creativity, Inc.",
+      "author": "Ed Catmull and Amy Wallace",
+      "num_highlights": 8
+    },
+    {
+      "id": 5300955,
+      "title": "Dawn of the New Everything",
+      "author": "Jaron Lanier",
+      "num_highlights": 96
+    },
+    {
+      "id": 3619241,
+      "title": "Deep Work",
+      "author": "Cal Newport",
+      "num_highlights": 32
+    },
+    {
+      "id": 1312692,
+      "title": "Designing Your Life",
+      "author": "Bill Burnett and Dave Evans",
+      "num_highlights": 35
+    },
+    {
+      "id": 823912,
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "num_highlights": 47
+    },
+    {
+      "id": 1047476,
+      "title": "Educated",
+      "author": "Tara Westover",
+      "num_highlights": 33
+    },
+    {
+      "id": 6102102,
+      "title": "Einstein",
+      "author": "Walter Isaacson",
+      "num_highlights": 98
+    },
+    {
+      "id": 823917,
+      "title": "El Hobbit",
+      "author": "J. R. R. Tolkien",
+      "num_highlights": 1
+    },
+    {
+      "id": 57417814,
+      "title": "Endurance",
+      "author": "Alfred Lansing",
+      "num_highlights": 9
+    },
+    {
+      "id": 3643071,
+      "title": "Exhalation",
+      "author": "Ted Chiang",
+      "num_highlights": 32
+    },
+    {
+      "id": 30919917,
+      "title": "Foundation",
+      "author": "Isaac Asimov",
+      "num_highlights": 5
+    },
+    {
+      "id": 32984158,
+      "title": "Golden Son",
+      "author": "Pierce Brown",
+      "num_highlights": 4
+    },
+    {
+      "id": 36027061,
+      "title": "Hidden Valley Road",
+      "author": "Robert Kolker",
+      "num_highlights": 26
+    },
+    {
+      "id": 823918,
+      "title": "How Emotions Are Made",
+      "author": "Lisa Feldman Barrett",
+      "num_highlights": 13
+    },
+    {
+      "id": 823920,
+      "title": "How to Use Readwise",
+      "author": "Readwise Team",
+      "num_highlights": 128
+    },
+    {
+      "id": 2734598,
+      "title": "Keep Going",
+      "author": "Austin Kleon",
+      "num_highlights": 7
+    },
+    {
+      "id": 4124159,
+      "title": "Kitchen Confidential",
+      "author": "Anthony Bourdain",
+      "num_highlights": 10
+    },
+    {
+      "id": 42481177,
+      "title": "Leadership and Self-Deception",
+      "author": "The Arbinger Institute",
+      "num_highlights": 5
+    },
+    {
+      "id": 1948855,
+      "title": "Life 3.0",
+      "author": "Max Tegmark",
+      "num_highlights": 73
+    },
+    {
+      "id": 1569203,
+      "title": "Man's Search for Meaning",
+      "author": "Viktor E. Frankl",
+      "num_highlights": 42
+    },
+    {
+      "id": 2277569,
+      "title": "Meditations",
+      "author": "Marcus Aurelius",
+      "num_highlights": 5
+    },
+    {
+      "id": 2368079,
+      "title": "Mindf*ck",
+      "author": "Christopher Wylie",
+      "num_highlights": 75
+    },
+    {
+      "id": 48156786,
+      "title": "More to Meditation",
+      "author": "Oshan Jarow",
+      "num_highlights": 1
+    },
+    {
+      "id": 35630645,
+      "title": "Morning Star",
+      "author": "Pierce Brown",
+      "num_highlights": 5
+    },
+    {
+      "id": 57417811,
+      "title": "Mount Misery",
+      "author": "Samuel Shem Md",
+      "num_highlights": 8
+    },
+    {
+      "id": 823914,
+      "title": "My Spiritual Journey",
+      "author": "Dalai Lama and Sofia Stril-Rever",
+      "num_highlights": 58
+    },
+    {
+      "id": 6478814,
+      "title": "Neuromancer",
+      "author": "William Gibson",
+      "num_highlights": 6
+    },
+    {
+      "id": 57417808,
+      "title": "Nexus",
+      "author": "Yuval Noah Harari",
+      "num_highlights": 39
+    },
+    {
+      "id": 57417809,
+      "title": "On Call",
+      "author": "Anthony Fauci",
+      "num_highlights": 2
+    },
+    {
+      "id": 12876750,
+      "title": "On Food and Cooking",
+      "author": "Harold McGee, Patricia Dorfman, and Justin Greene",
+      "num_highlights": 2
+    },
+    {
+      "id": 57417817,
+      "title": "Orbital",
+      "author": "Samantha Harvey",
+      "num_highlights": 12
+    },
+    {
+      "id": 21250797,
+      "title": "Packing for Mars",
+      "author": "Mary Roach",
+      "num_highlights": 17
+    },
+    {
+      "id": 8280421,
+      "title": "Piano Notes",
+      "author": "Charles Rosen",
+      "num_highlights": 7
+    },
+    {
+      "id": 29189261,
+      "title": "Project Hail Mary",
+      "author": "Andy Weir",
+      "num_highlights": 3
+    },
+    {
+      "id": 1360704,
+      "title": "Quick Passages",
+      "author": null,
+      "num_highlights": 12
+    },
+    {
+      "id": 32532669,
+      "title": "Red Rising",
+      "author": "Pierce Brown",
+      "num_highlights": 2
+    },
+    {
+      "id": 1193743,
+      "title": "Sapiens",
+      "author": "Yuval Noah Harari",
+      "num_highlights": 101
+    },
+    {
+      "id": 2776732,
+      "title": "Self Comes to Mind",
+      "author": "Antonio Damasio",
+      "num_highlights": 86
+    },
+    {
+      "id": 1519036,
+      "title": "Shoe Dog",
+      "author": "Phil Knight",
+      "num_highlights": 36
+    },
+    {
+      "id": 1190814,
+      "title": "Show Your Work!",
+      "author": "Austin Kleon",
+      "num_highlights": 39
+    },
+    {
+      "id": 42997284,
+      "title": "Siddhartha",
+      "author": "Hermann Hesse",
+      "num_highlights": 32
+    },
+    {
+      "id": 1419605,
+      "title": "Siddhartha's Brain",
+      "author": "James Kingsland",
+      "num_highlights": 25
+    },
+    {
+      "id": 20329637,
+      "title": "Speed Reading",
+      "author": "Kam Knight",
+      "num_highlights": 9
+    },
+    {
+      "id": 4505129,
+      "title": "Steve Jobs",
+      "author": "Walter Isaacson",
+      "num_highlights": 102
+    },
+    {
+      "id": 988497,
+      "title": "Stories of Your Life and Others",
+      "author": "Ted Chiang",
+      "num_highlights": 15
+    },
+    {
+      "id": 1560090,
+      "title": "Sum",
+      "author": "David Eagleman",
+      "num_highlights": 1
+    },
+    {
+      "id": 1279275,
+      "title": "The 4-Hour Workweek",
+      "author": "Timothy Ferriss",
+      "num_highlights": 14
+    },
+    {
+      "id": 823919,
+      "title": "The 7 Habits of Highly Effective People",
+      "author": "Stephen R. Covey",
+      "num_highlights": 1
+    },
+    {
+      "id": 13079835,
+      "title": "The Art of Flavor",
+      "author": "Daniel Patterson and Mandy Aftel",
+      "num_highlights": 12
+    },
+    {
+      "id": 57417820,
+      "title": "The Autistic Brain",
+      "author": "Temple Grandin, Richard Panek",
+      "num_highlights": 8
+    },
+    {
+      "id": 57417815,
+      "title": "The Boy Who Was Raised as a Dog",
+      "author": "Bruce D. Perry, Maia Szalavitz ",
+      "num_highlights": 18
+    },
+    {
+      "id": 30415496,
+      "title": "The Carbon Almanac",
+      "author": "The Carbon Almanac Network and Seth Godin",
+      "num_highlights": 1
+    },
+    {
+      "id": 39926513,
+      "title": "The Center Cannot Hold",
+      "author": "Elyn R. Saks",
+      "num_highlights": 43
+    },
+    {
+      "id": 57417813,
+      "title": "The Dark Forest",
+      "author": "Cixin Liu",
+      "num_highlights": 4
+    },
+    {
+      "id": 8876957,
+      "title": "The Digital Doctor",
+      "author": "Robert Wachter",
+      "num_highlights": 50
+    },
+    {
+      "id": 11668578,
+      "title": "The Dispossessed",
+      "author": "Ursula K. Le Guin",
+      "num_highlights": 23
+    },
+    {
+      "id": 10316406,
+      "title": "The Diving Bell and the Butterfly",
+      "author": "Jean-Dominique Bauby",
+      "num_highlights": 9
+    },
+    {
+      "id": 42759043,
+      "title": "The Grace of Kings",
+      "author": "Ken Liu",
+      "num_highlights": 3
+    },
+    {
+      "id": 20216928,
+      "title": "The House of God",
+      "author": "Samuel Shem",
+      "num_highlights": 39
+    },
+    {
+      "id": 9775463,
+      "title": "The Index Card",
+      "author": "Helaine Olen, Harold Pollack",
+      "num_highlights": 22
+    },
+    {
+      "id": 8814504,
+      "title": "The Innovators",
+      "author": "Walter Isaacson",
+      "num_highlights": 56
+    },
+    {
+      "id": 6801486,
+      "title": "The Long Fix",
+      "author": "Vivian S.  Lee",
+      "num_highlights": 66
+    },
+    {
+      "id": 2915816,
+      "title": "The Lord of the Rings",
+      "author": "J.R.R. Tolkien",
+      "num_highlights": 9
+    },
+    {
+      "id": 3217551,
+      "title": "The Man Who Mistook His Wife for a Hat",
+      "author": "Oliver Sacks",
+      "num_highlights": 33
+    },
+    {
+      "id": 14970129,
+      "title": "The Paper Menagerie and Other Stories",
+      "author": "Ken Liu",
+      "num_highlights": 16
+    },
+    {
+      "id": 2930210,
+      "title": "The Poisonwood Bible",
+      "author": "Barbara Kingsolver",
+      "num_highlights": 1
+    },
+    {
+      "id": 9596856,
+      "title": "The Snows of Kilimanjaro and Other Stories",
+      "author": "Ernest Hemingway",
+      "num_highlights": 1
+    },
+    {
+      "id": 9993410,
+      "title": "The Tao",
+      "author": "Lao-tse",
+      "num_highlights": 23
+    },
+    {
+      "id": 26044507,
+      "title": "The Three-Body Problem",
+      "author": "Cixin Liu and Ken Liu",
+      "num_highlights": 10
+    },
+    {
+      "id": 4011789,
+      "title": "The Wretched of the Earth",
+      "author": "Frantz Fanon, Jean-Paul Sartre (Preface), Homi K. Bhabha (Foreword), Richard Philcox (Translator)",
+      "num_highlights": 18
+    },
+    {
+      "id": 42485649,
+      "title": "Thoughts to Preserve",
+      "author": "Me",
+      "num_highlights": 16
+    },
+    {
+      "id": 2299720,
+      "title": "Tools of Titans",
+      "author": "Timothy Ferriss",
+      "num_highlights": 12
+    },
+    {
+      "id": 3584648,
+      "title": "Tribe of Mentors",
+      "author": "Timothy Ferriss",
+      "num_highlights": 8
+    },
+    {
+      "id": 33369821,
+      "title": "Tuesdays With Morrie",
+      "author": "Mitch Albom",
+      "num_highlights": 34
+    },
+    {
+      "id": 8291887,
+      "title": "Unlimited Memory",
+      "author": "Kevin Horsley",
+      "num_highlights": 42
+    },
+    {
+      "id": 43525918,
+      "title": "What's Our Problem?",
+      "author": "Tim Urban",
+      "num_highlights": 2
+    },
+    {
+      "id": 823913,
+      "title": "When Breath Becomes Air",
+      "author": "Paul Kalanithi",
+      "num_highlights": 51
+    }
+  ]
 }
