@@ -129,6 +129,8 @@ def run(
             outcome="abandoned",
         ))
 
+    refresh_books_run(client=client, data_dir=data_dir, commit_fn=commit_fn)
+
     new_state = replace(
         state,
         current_book_id=book_id,
@@ -138,8 +140,6 @@ def run(
         history=new_history,
     )
     save_state(new_state, data_dir / "state.json")
-
-    refresh_books_run(client=client, data_dir=data_dir, commit_fn=commit_fn)
 
     commit_fn(
         f"select: book {book_id} on {now_chicago_date.isoformat()}",
