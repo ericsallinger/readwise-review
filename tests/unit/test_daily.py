@@ -339,3 +339,60 @@ def test_smtp_failure_leaves_state_unchanged(
 
     state_after = load_state(d / "state.json")
     assert state_after == state_before
+
+
+def test_bootstrap_path_snapshots_book_and_sends_first_highlights(
+    tmp_path, email_sent, send_email_fake, commit_fn_fake
+):
+    today = date(2026, 5, 6)
+    config = Config(
+        highlights_per_email=8,
+        to_email="to@example.com",
+        from_email="from@example.com",
+        timezone="America/Chicago",
+        bootstrap_book_id=42,
+    )
+    d = tmp_path / "data"
+    d.mkdir()
+    (d / "highlights").mkdir()
+    save_state(State(
+        current_book_id=None,
+        current_book_started_on=None,
+        position=0,
+        last_send_date=None,
+        picker_email_sent_on=None,
+        bootstrap_consumed=False,
+        history=[],
+    ), d / "state.json")
+    save_books(BooksFile(
+        fetched_at="2026-05-01T12:00:00Z",
+        books=[BookEntry(id=42, title="Bootstrap Book", author="Author", num_highlights=20)],
+    ), d / "books.json")
+
+    client = MagicMock()
+    client.get_highlights.return_value = iter([
+        Highlight(id=i, text=f"Quote {i}", location=i, location_type="page", note="", highlighted_at=None)
+        for i in range(20)
+    ])
+
+    run_daily(
+        config=config,
+        data_dir=d,
+        client=client,
+        send_email_fn=send_email_fake,
+        commit_fn=commit_fn_fake,
+        gmail_app_password="pw",
+        repo="user/repo",
+        now=_seven_am(today),
+    )
+
+    snap_path = d / "highlights" / "42.json"
+    assert snap_path.exists()
+    assert len(email_sent) == 1
+    assert email_sent[0]["subject"] == "Readwise: Bootstrap Book — 1–8 of 20"
+    s = load_state(d / "state.json")
+    assert s.current_book_id == 42
+    assert s.current_book_started_on == today
+    assert s.bootstrap_consumed is True
+    assert s.position == 8
+    assert s.last_send_date == today

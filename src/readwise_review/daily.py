@@ -49,6 +49,36 @@ def run(
     if state.last_send_date == today:
         return
 
+    # 5a. Bootstrap: if no current book and config has a bootstrap_book_id and we
+    # haven't consumed it yet, snapshot that book and fall through to (d).
+    if (
+        state.current_book_id is None
+        and config.bootstrap_book_id is not None
+        and not state.bootstrap_consumed
+    ):
+        from datetime import timezone
+        from readwise_review.state import HighlightSnapshot, save_snapshot, snapshot_path
+
+        highlights = sorted(
+            client.get_highlights(book_id=config.bootstrap_book_id),
+            key=lambda h: (h.location if h.location is not None else 10**9, h.id),
+        )
+        snap = HighlightSnapshot(
+            book_id=config.bootstrap_book_id,
+            snapshotted_at=datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            highlights=highlights,
+        )
+        save_snapshot(snap, snapshot_path(data_dir, config.bootstrap_book_id))
+        state = replace(
+            state,
+            current_book_id=config.bootstrap_book_id,
+            current_book_started_on=today,
+            position=0,
+            bootstrap_consumed=True,
+        )
+        # Fall through to branch (d). The single save_state at the end of (d)
+        # persists the bootstrap mutation.
+
     # 5b. No current book, picker already sent → silence.
     if state.current_book_id is None and state.picker_email_sent_on is not None:
         return
