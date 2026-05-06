@@ -76,7 +76,69 @@ def run(
         )
         return
 
-    # 5d. Current book set → highlights / finishing branch (next task)
+    # 5d. Current book set → load snapshot, slice, send.
+    from readwise_review.email_render import render_highlights_email
+    from readwise_review.refresh import run as refresh_books_run
+    from readwise_review.state import HistoryEntry, load_snapshot, snapshot_path
+
+    snap = load_snapshot(snapshot_path(data_dir, state.current_book_id))
+    n = config.highlights_per_email
+    slice_ = snap.highlights[state.position : state.position + n]
+    is_finishing = (state.position + len(slice_)) >= len(snap.highlights)
+
+    books_file = load_books(data_dir / "books.json")
+    if is_finishing:
+        refresh_books_run(client=client, data_dir=data_dir, commit_fn=commit_fn)
+        books_file = load_books(data_dir / "books.json")
+
+    book_entry = next(b for b in books_file.books if b.id == state.current_book_id)
+    rendered = render_highlights_email(
+        book=book_entry,
+        highlights=slice_,
+        position_start=state.position,
+        total_in_book=len(snap.highlights),
+        is_finishing=is_finishing,
+        all_books=books_file.books if is_finishing else [],
+        repo=repo,
+    )
+    send_email_fn(
+        rendered,
+        from_email=config.from_email,
+        to_email=config.to_email,
+        gmail_app_password=gmail_app_password,
+    )
+
+    if is_finishing:
+        history_entry = HistoryEntry(
+            book_id=state.current_book_id,
+            started=state.current_book_started_on,
+            finished=today,
+            abandoned_at=None,
+            position_at_abandon=None,
+            highlight_count=len(snap.highlights),
+            outcome="completed",
+        )
+        new_state = replace(
+            state,
+            current_book_id=None,
+            current_book_started_on=None,
+            position=0,
+            picker_email_sent_on=today,
+            last_send_date=today,
+            history=[*state.history, history_entry],
+        )
+        commit_msg = f"daily: finished book {state.current_book_id} on {today.isoformat()}"
+    else:
+        new_state = replace(
+            state,
+            position=state.position + len(slice_),
+            last_send_date=today,
+        )
+        commit_msg = f"daily: send {len(slice_)} highlights for {today.isoformat()}"
+
+    save_state(new_state, data_dir / "state.json")
+    commit_fn(commit_msg, ["data/state.json", "data/books.json"], None)
+    return
 
 
 def main() -> None:

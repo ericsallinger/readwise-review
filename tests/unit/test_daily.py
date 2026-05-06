@@ -201,3 +201,141 @@ def test_silence_when_no_book_and_picker_already_sent(
     assert email_sent == []
     s = load_state(d / "state.json")
     assert s.last_send_date == date(2026, 5, 4)
+
+
+def _seed_book_with_highlights(
+    data_dir: Path, book_id: int, count: int, position: int = 0
+) -> None:
+    today = date(2026, 5, 1)
+    state = State(
+        current_book_id=book_id,
+        current_book_started_on=today,
+        position=position,
+        last_send_date=None,
+        picker_email_sent_on=None,
+        bootstrap_consumed=True,
+        history=[],
+    )
+    save_state(state, data_dir / "state.json")
+    snap = HighlightSnapshot(
+        book_id=book_id,
+        snapshotted_at="2026-05-01T12:00:00Z",
+        highlights=[
+            Highlight(id=i, text=f"Quote {i}", location=i, location_type="page", note="", highlighted_at=None)
+            for i in range(count)
+        ],
+    )
+    save_snapshot(snap, data_dir / "highlights" / f"{book_id}.json")
+    save_books(BooksFile(
+        fetched_at="2026-05-01T12:00:00Z",
+        books=[BookEntry(id=book_id, title="My Book", author="Author", num_highlights=count)],
+    ), data_dir / "books.json")
+
+
+def test_regular_highlights_email(
+    config, tmp_path, email_sent, send_email_fake, commit_fn_fake
+):
+    today = date(2026, 5, 6)
+    d = tmp_path / "data"
+    d.mkdir()
+    (d / "highlights").mkdir()
+    _seed_book_with_highlights(d, book_id=42, count=20, position=4)
+
+    run_daily(
+        config=config,
+        data_dir=d,
+        client=MagicMock(),
+        send_email_fn=send_email_fake,
+        commit_fn=commit_fn_fake,
+        gmail_app_password="pw",
+        repo="user/repo",
+        now=_seven_am(today),
+    )
+
+    assert len(email_sent) == 1
+    assert email_sent[0]["subject"] == "Readwise: My Book — 5–12 of 20"
+    assert "Pick the next book" not in email_sent[0]["html"]
+
+    s = load_state(d / "state.json")
+    assert s.position == 12
+    assert s.last_send_date == today
+
+
+def test_finishing_email_when_remaining_fits_in_one_email(
+    config, tmp_path, email_sent, send_email_fake, commit_fn_fake
+):
+    today = date(2026, 5, 6)
+    d = tmp_path / "data"
+    d.mkdir()
+    (d / "highlights").mkdir()
+    _seed_book_with_highlights(d, book_id=42, count=10, position=6)
+    save_books(BooksFile(
+        fetched_at="2026-05-01T12:00:00Z",
+        books=[
+            BookEntry(id=42, title="My Book", author="Author", num_highlights=10),
+            BookEntry(id=99, title="Other Book", author="Other Author", num_highlights=20),
+        ],
+    ), d / "books.json")
+
+    client = MagicMock()
+    client.list_books.return_value = iter([
+        BookEntry(id=42, title="My Book", author="Author", num_highlights=10),
+        BookEntry(id=99, title="Other Book", author="Other Author", num_highlights=20),
+    ])
+
+    run_daily(
+        config=config,
+        data_dir=d,
+        client=client,
+        send_email_fn=send_email_fake,
+        commit_fn=commit_fn_fake,
+        gmail_app_password="pw",
+        repo="user/repo",
+        now=_seven_am(today),
+    )
+
+    assert len(email_sent) == 1
+    assert email_sent[0]["subject"] == "Readwise: My Book — 7–10 of 10"
+    assert "Pick the next book" in email_sent[0]["html"]
+    assert "You've finished" in email_sent[0]["html"]
+
+    s = load_state(d / "state.json")
+    assert s.current_book_id is None
+    assert s.current_book_started_on is None
+    assert s.position == 0
+    assert s.picker_email_sent_on == today
+    assert s.last_send_date == today
+    assert len(s.history) == 1
+    assert s.history[0].book_id == 42
+    assert s.history[0].finished == today
+    assert s.history[0].outcome == "completed"
+    assert s.history[0].highlight_count == 10
+
+
+def test_smtp_failure_leaves_state_unchanged(
+    config, tmp_path, commit_fn_fake
+):
+    today = date(2026, 5, 6)
+    d = tmp_path / "data"
+    d.mkdir()
+    (d / "highlights").mkdir()
+    _seed_book_with_highlights(d, book_id=42, count=20, position=4)
+    state_before = load_state(d / "state.json")
+
+    def failing_send(*args, **kwargs):
+        raise RuntimeError("SMTP down")
+
+    with pytest.raises(RuntimeError):
+        run_daily(
+            config=config,
+            data_dir=d,
+            client=MagicMock(),
+            send_email_fn=failing_send,
+            commit_fn=commit_fn_fake,
+            gmail_app_password="pw",
+            repo="user/repo",
+            now=_seven_am(today),
+        )
+
+    state_after = load_state(d / "state.json")
+    assert state_after == state_before
