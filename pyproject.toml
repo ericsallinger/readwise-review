@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "readwise-review"
+version = "0.1.0"
+description = "Daily-email habit system for reviewing Readwise book highlights"
+requires-python = ">=3.12"
+dependencies = [
+    "requests>=2.31",
+    "jinja2>=3.1",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "responses>=0.24",
+]
+
+[project.scripts]
+readwise-daily = "readwise_review.daily:main"
+readwise-select = "readwise_review.select:main"
+readwise-refresh = "readwise_review.refresh:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+readwise_review = ["templates/*.j2"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: integration tests that hit live Readwise/SMTP (run with -m integration)",
+]
+addopts = "-m 'not integration'"
