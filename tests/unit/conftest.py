@@ -29,6 +29,7 @@ def data_dir(tmp_path: Path) -> Path:
         "last_send_date": None,
         "picker_email_sent_on": None,
         "bootstrap_consumed": False,
+        # history must remain [] in the fixture; state_from_dict uses keyed access on entries
         "history": [],
     }))
     (d / "books.json").write_text(json.dumps({

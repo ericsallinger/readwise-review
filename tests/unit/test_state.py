@@ -1,6 +1,5 @@
 """State module load/save for state.json, books.json, and highlight snapshots."""
 
-import json
 from datetime import date
 from pathlib import Path
 
@@ -17,6 +16,7 @@ from readwise_review.state import (
     save_books,
     save_snapshot,
     save_state,
+    snapshot_path,
 )
 
 
@@ -160,3 +160,7 @@ def test_state_file_is_pretty_printed(tmp_path: Path) -> None:
     save_state(state, path)
     raw = path.read_text()
     assert "\n  " in raw
+
+
+def test_snapshot_path(tmp_path: Path) -> None:
+    assert snapshot_path(tmp_path, 42) == tmp_path / "highlights" / "42.json"
