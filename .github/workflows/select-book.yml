@@ -1,0 +1,33 @@
+name: Select book
+
+on:
+  issues:
+    types: [opened]
+
+concurrency:
+  group: select-book
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  select:
+    if: |
+      github.event.issue.user.login == github.repository_owner &&
+      startsWith(github.event.issue.title, 'select-book:')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -e .
+      - run: python -m readwise_review.select
+        env:
+          READWISE_TOKEN: ${{ secrets.READWISE_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
