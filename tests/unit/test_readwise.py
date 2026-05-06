@@ -4,6 +4,7 @@ import pytest
 import responses
 
 from readwise_review.readwise import ReadwiseClient
+from readwise_review.state import BookEntry, Highlight
 
 
 def test_auth_header_set_on_request() -> None:
@@ -89,3 +90,92 @@ def test_5xx_eventually_fails_after_max_retries(monkeypatch: pytest.MonkeyPatch)
             rsps.add(responses.GET, "https://example.com/", status=500)
         with pytest.raises(Exception):
             client._get("https://example.com/")
+
+
+def test_validate_token_returns_true_on_204() -> None:
+    client = ReadwiseClient(token="t")
+    with responses.RequestsMock() as rsps:
+        rsps.add(responses.GET, "https://readwise.io/api/v2/auth/", status=204)
+        assert client.validate_token() is True
+
+
+def test_validate_token_returns_false_on_401() -> None:
+    client = ReadwiseClient(token="bad")
+    with responses.RequestsMock() as rsps:
+        rsps.add(responses.GET, "https://readwise.io/api/v2/auth/", status=401)
+        assert client.validate_token() is False
+
+
+def test_list_books_maps_fields_and_filters_to_books_category() -> None:
+    client = ReadwiseClient(token="t")
+    with responses.RequestsMock() as rsps:
+        rsps.add(
+            responses.GET,
+            "https://readwise.io/api/v2/books/",
+            json={
+                "count": 2,
+                "next": None,
+                "previous": None,
+                "results": [
+                    {
+                        "id": 12345,
+                        "title": "The Beginning of Infinity",
+                        "author": "David Deutsch",
+                        "num_highlights": 87,
+                        "category": "books",
+                    },
+                    {
+                        "id": 9876,
+                        "title": "Untitled",
+                        "author": None,
+                        "num_highlights": 4,
+                        "category": "books",
+                    },
+                ],
+            },
+            status=200,
+        )
+        books = list(client.list_books())
+    assert books == [
+        BookEntry(id=12345, title="The Beginning of Infinity", author="David Deutsch", num_highlights=87),
+        BookEntry(id=9876, title="Untitled", author=None, num_highlights=4),
+    ]
+
+
+def test_get_highlights_for_book_maps_fields() -> None:
+    client = ReadwiseClient(token="t")
+    with responses.RequestsMock() as rsps:
+        rsps.add(
+            responses.GET,
+            "https://readwise.io/api/v2/highlights/",
+            json={
+                "count": 1,
+                "next": None,
+                "previous": None,
+                "results": [
+                    {
+                        "id": 555,
+                        "text": "Quote",
+                        "location": 42,
+                        "location_type": "page",
+                        "note": "",
+                        "highlighted_at": "2024-08-12T14:23:00Z",
+                        "book_id": 12345,
+                        "color": "yellow",
+                        "url": None,
+                    },
+                ],
+            },
+            status=200,
+        )
+        highlights = list(client.get_highlights(book_id=12345))
+    assert highlights == [
+        Highlight(
+            id=555,
+            text="Quote",
+            location=42,
+            location_type="page",
+            note="",
+            highlighted_at="2024-08-12T14:23:00Z",
+        ),
+    ]

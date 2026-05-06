@@ -57,3 +57,42 @@ class ReadwiseClient:
             yield from body["results"]
             next_url = body.get("next")
             next_params = None
+
+    def validate_token(self) -> bool:
+        """Returns True if token is valid (HTTP 204), False on 401."""
+        url = f"{self._base_url}/auth/"
+        response = self._session.get(url, headers=self._headers())
+        if response.status_code == 204:
+            return True
+        if response.status_code == 401:
+            return False
+        response.raise_for_status()
+        return True
+
+    def list_books(self) -> Iterator["BookEntry"]:
+        """Yields all books in the user's library, category=books."""
+        from readwise_review.state import BookEntry
+
+        url = f"{self._base_url}/books/"
+        for raw in self._paged_get(url, params={"category": "books", "page_size": 1000}):
+            yield BookEntry(
+                id=raw["id"],
+                title=raw["title"],
+                author=raw.get("author"),
+                num_highlights=raw["num_highlights"],
+            )
+
+    def get_highlights(self, book_id: int) -> Iterator["Highlight"]:
+        """Yields all highlights for the given book (unsorted; caller sorts)."""
+        from readwise_review.state import Highlight
+
+        url = f"{self._base_url}/highlights/"
+        for raw in self._paged_get(url, params={"book_id": book_id, "page_size": 1000}):
+            yield Highlight(
+                id=raw["id"],
+                text=raw["text"],
+                location=raw.get("location"),
+                location_type=raw.get("location_type", ""),
+                note=raw.get("note", ""),
+                highlighted_at=raw.get("highlighted_at"),
+            )
