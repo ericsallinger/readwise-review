@@ -1,0 +1,26 @@
+{{ book.title }}
+{{ book.author or "" }}
+{% for h in highlights %}
+---
+
+{{ h.text }}
+{% if h.location is not none %}
+[{{ h.location_type | format_location }} {{ h.location }}]
+{% endif %}
+{% if h.note %}
+Note: {{ h.note }}
+{% endif %}
+{% endfor %}
+---
+
+{{ position_end }} of {{ total_in_book }} -- {{ remaining }} remaining
+{% if is_finishing %}
+
+You've finished {{ book.title }}.
+
+Pick the next book to review:
+{% for b in all_books %}
+- {{ b.title }} -- {{ b.author or "" }} ({{ b.num_highlights }} highlights)
+  https://github.com/{{ repo }}/issues/new?title={{ ('select-book: ' ~ b.id) | urlencode }}
+{% endfor %}
+{% endif %}
