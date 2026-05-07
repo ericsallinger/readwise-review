@@ -39,10 +39,6 @@ def run(
     """Single entrypoint for the daily-email logic. All collaborators are injected."""
     today = now.date()
 
-    # Local-hour gate
-    if now.hour != 7:
-        return
-
     state = load_state(data_dir / "state.json")
 
     # Same-day idempotency
