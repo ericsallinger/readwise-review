@@ -46,8 +46,8 @@ def test_regular_highlights_email_does_not_include_picker() -> None:
         all_books=SAMPLE_BOOKS,
         repo="user/repo",
     )
-    assert "Pick the next book" not in email.html
-    assert "Pick the next book" not in email.plain
+    assert "Choose your next book" not in email.html
+    assert "Choose your next book" not in email.plain
 
 
 def test_finishing_email_includes_picker_with_alphabetical_books() -> None:
@@ -61,8 +61,8 @@ def test_finishing_email_includes_picker_with_alphabetical_books() -> None:
         repo="user/repo",
     )
     assert email.subject == "Readwise: Antifragile — 1–2 of 2"
-    assert "Pick the next book" in email.html
-    assert "You've finished" in email.html
+    assert "Choose your next book" in email.html
+    assert "Finished" in email.html
     a_index = email.html.find("Antifragile")
     b_index = email.html.find("The Beginning of Infinity")
     assert a_index < b_index
@@ -108,7 +108,7 @@ def test_highlight_with_note_renders_note_block() -> None:
         repo="user/repo",
     )
     assert "My note here." in email.html
-    assert "Note:" in email.html
+    assert "Note" in email.html
 
 
 def test_highlight_with_no_location_renders_no_caption() -> None:

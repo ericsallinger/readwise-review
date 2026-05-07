@@ -2,51 +2,233 @@
 <html>
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=EB+Garamond:ital,wght@0,400;1,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  body { font-family: Georgia, serif; max-width: 640px; margin: 24px auto; padding: 0 16px; line-height: 1.6; color: #1a1a1a; }
-  h1 { font-size: 22px; margin: 0 0 4px; }
-  .author { color: #555; font-size: 14px; margin-bottom: 16px; }
-  hr { border: none; border-top: 1px solid #ddd; margin: 24px 0; }
-  .highlight { margin: 24px 0; }
-  .highlight-text { font-size: 17px; }
-  .caption { color: #777; font-size: 13px; margin-top: 8px; }
-  .note { margin: 12px 0 0 16px; padding-left: 12px; border-left: 3px solid #ccc; color: #444; font-style: italic; font-size: 14px; }
-  .note-label { font-style: normal; font-weight: bold; }
-  .footer { color: #666; font-size: 13px; margin-top: 32px; }
-  .picker { margin-top: 32px; }
-  .picker h2 { font-size: 18px; }
-  .picker ul { padding-left: 20px; line-height: 1.8; }
-  .finished { font-size: 18px; margin: 24px 0; }
-  .finished u { text-decoration: underline; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #f0ebe2; font-family: 'DM Sans', Helvetica, sans-serif; }
+
+  .wrapper { max-width: 620px; margin: 32px auto; background: #f0ebe2; }
+
+  /* Header */
+  .header {
+    background: #1a1410;
+    padding: 36px 44px 32px;
+    border-top: 4px solid #bf6535;
+  }
+  .header-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #bf6535;
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 27px;
+    font-weight: 600;
+    color: #f7f3ee;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .header .author {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 16px;
+    color: #9a8570;
+  }
+
+  /* Progress */
+  .progress-track { background: #2e261e; height: 3px; }
+  .progress-fill { background: #bf6535; height: 3px; }
+
+  /* Body */
+  .body { background: #faf7f2; padding: 44px 44px 36px; }
+
+  /* Highlight block */
+  .highlight-block { margin-bottom: 44px; }
+
+  .hl-ordinal {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #bf6535;
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .hl-text {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 20px;
+    line-height: 1.75;
+    color: #1a1410;
+  }
+  .hl-location {
+    margin-top: 10px;
+    font-size: 12px;
+    color: #a0907e;
+    letter-spacing: 0.04em;
+  }
+  .hl-note {
+    margin-top: 16px;
+    padding: 12px 16px 14px;
+    background: #f0ebe2;
+    border-left: 3px solid #bf6535;
+  }
+  .hl-note-label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #bf6535;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .hl-note-text {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 17px;
+    line-height: 1.65;
+    color: #4a3c2e;
+  }
+
+  /* Divider between highlights */
+  .divider {
+    text-align: center;
+    color: #c4ac90;
+    font-size: 16px;
+    letter-spacing: 0.6em;
+    padding-right: 0.6em; /* compensate letter-spacing on last char */
+    margin-bottom: 44px;
+    line-height: 1;
+  }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid #e4ddd3;
+    padding: 18px 44px 22px;
+    background: #faf7f2;
+    font-size: 12px;
+    color: #a0907e;
+    text-align: center;
+    letter-spacing: 0.03em;
+  }
+
+  /* Finished banner */
+  .finished-banner {
+    background: #1a1410;
+    padding: 32px 44px;
+    text-align: center;
+    border-top: 1px solid #2e261e;
+  }
+  .finished-ornament {
+    font-size: 22px;
+    color: #bf6535;
+    display: block;
+    margin-bottom: 12px;
+    letter-spacing: 0.3em;
+  }
+  .finished-banner p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 19px;
+    color: #f7f3ee;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .finished-banner strong {
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  /* Picker */
+  .picker { background: #faf7f2; padding: 32px 44px 36px; }
+  .picker-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #bf6535;
+    font-weight: 500;
+    margin-bottom: 22px;
+  }
+  .picker-book {
+    display: block;
+    padding: 14px 0;
+    border-bottom: 1px solid #e4ddd3;
+    text-decoration: none;
+    color: inherit;
+  }
+  .picker-title {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 18px;
+    color: #1a1410;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .picker-meta {
+    font-size: 12px;
+    color: #a0907e;
+    letter-spacing: 0.02em;
+  }
 </style>
 </head>
 <body>
-<h1>{{ book.title }}</h1>
-<div class="author">{{ book.author or "" }}</div>
-<hr>
-{% for h in highlights %}
-<div class="highlight">
-  <div class="highlight-text">{{ h.text }}</div>
-  {% if h.location is not none %}
-  <div class="caption">{{ h.location_type | format_location }} {{ h.location }}</div>
+<div class="wrapper">
+
+  <div class="header">
+    <div class="header-label">Today&rsquo;s highlights</div>
+    <h1>{{ book.title }}</h1>
+    {% if book.author %}<div class="author">{{ book.author }}</div>{% endif %}
+  </div>
+
+  <div class="progress-track">
+    <div class="progress-fill" style="width: {{ (position_end / total_in_book * 100) | round(1) }}%;"></div>
+  </div>
+
+  <div class="body">
+    {% for h in highlights %}
+
+    <div class="highlight-block">
+      <div class="hl-ordinal">Highlight {{ loop.index }}</div>
+      <div class="hl-text">{{ h.text }}</div>
+      {% if h.location is not none %}
+      <div class="hl-location">{{ h.location_type | format_location }}&thinsp;{{ h.location }}</div>
+      {% endif %}
+      {% if h.note %}
+      <div class="hl-note">
+        <span class="hl-note-label">Note</span>
+        <span class="hl-note-text">{{ h.note }}</span>
+      </div>
+      {% endif %}
+    </div>
+
+    {% if not loop.last %}
+    <div class="divider">&#183;&ensp;&#183;&ensp;&#183;</div>
+    {% endif %}
+
+    {% endfor %}
+  </div>
+
+  <div class="footer">
+    {{ position_end }} of {{ total_in_book }} highlights &nbsp;&mdash;&nbsp; {{ remaining }} remaining
+  </div>
+
+  {% if is_finishing %}
+  <div class="finished-banner">
+    <span class="finished-ornament">&#10022; &#10022; &#10022;</span>
+    <p><strong>Finished:</strong> <em>{{ book.title }}</em></p>
+  </div>
+  <div class="picker">
+    <div class="picker-label">Choose your next book</div>
+    {% for b in all_books %}
+    <a class="picker-book" href="https://github.com/{{ repo }}/issues/new?title={{ ('select-book: ' ~ b.id) | urlencode }}">
+      <span class="picker-title">{{ b.title }}</span>
+      <span class="picker-meta">{{ b.author or "" }}&ensp;&middot;&ensp;{{ b.num_highlights }} highlights</span>
+    </a>
+    {% endfor %}
+  </div>
   {% endif %}
-  {% if h.note %}
-  <div class="note"><span class="note-label">Note:</span> {{ h.note }}</div>
-  {% endif %}
+
 </div>
-{% endfor %}
-<div class="footer">{{ position_end }} of {{ total_in_book }} &mdash; {{ remaining }} remaining</div>
-{% if is_finishing %}
-<hr>
-<div class="finished"><strong><u>You've finished</u> <em>{{ book.title }}</em>.</strong></div>
-<div class="picker">
-  <h2><strong>Pick the next book to review:</strong></h2>
-  <ul>
-  {% for b in all_books %}
-    <li><a href="https://github.com/{{ repo }}/issues/new?title={{ ('select-book: ' ~ b.id) | urlencode }}">{{ b.title }} &mdash; {{ b.author or "" }} ({{ b.num_highlights }} highlights)</a></li>
-  {% endfor %}
-  </ul>
-</div>
-{% endif %}
 </body>
 </html>
