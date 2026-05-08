@@ -105,9 +105,23 @@ def run(
     # 5d. Current book set → load snapshot, slice, send.
     from readwise_review.email_render import render_highlights_email
     from readwise_review.refresh import run as refresh_books_run
-    from readwise_review.state import HistoryEntry, load_snapshot, snapshot_path
+    from readwise_review.state import HistoryEntry, HighlightSnapshot, load_snapshot, save_snapshot, snapshot_path
 
-    snap = load_snapshot(snapshot_path(data_dir, state.current_book_id))
+    snap_file = snapshot_path(data_dir, state.current_book_id)
+    if snap_file.exists():
+        snap = load_snapshot(snap_file)
+    else:
+        from datetime import timezone
+        highlights = sorted(
+            client.get_highlights(book_id=state.current_book_id),
+            key=lambda h: (h.location if h.location is not None else 10**9, h.id),
+        )
+        snap = HighlightSnapshot(
+            book_id=state.current_book_id,
+            snapshotted_at=datetime.now(tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            highlights=highlights,
+        )
+        save_snapshot(snap, snap_file)
     n = config.highlights_per_email
     slice_ = snap.highlights[state.position : state.position + n]
     is_finishing = (state.position + len(slice_)) >= len(snap.highlights)
@@ -163,7 +177,7 @@ def run(
         commit_msg = f"daily: send {len(slice_)} highlights for {today.isoformat()}"
 
     save_state(new_state, data_dir / "state.json")
-    commit_fn(commit_msg, ["data/state.json", "data/books.json"], None)
+    commit_fn(commit_msg, ["data/state.json", "data/books.json", str(snapshot_path(data_dir, state.current_book_id))], None)
     return
 
 
