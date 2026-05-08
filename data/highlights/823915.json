@@ -1,0 +1,270 @@
+{
+  "book_id": 823915,
+  "snapshotted_at": "2026-05-08T16:54:14Z",
+  "highlights": [
+    {
+      "id": 24832822,
+      "text": "When he looked at the planet Jupiter, Galileo found that it was accompanied by several small satellites or moons that orbited around it. This implied that everything did not have to orbit directly around the earth,",
+      "location": 117,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832823,
+      "text": "However, we now believe such an equilibrium would be unstable: if the stars in some region got only slightly nearer each other, the attractive",
+      "location": 154,
+      "location_type": "location",
+      "note": "Never thought about how gravity in a finite universe would suggest that tall mass falls into a center. I guess an expanding universe is how this is counteracted",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832824,
+      "text": "time was a property of the universe that God created, and that time did not exist before the beginning of the universe.",
+      "location": 187,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832825,
+      "text": "But in 1929, Edwin Hubble made the landmark observation that wherever you look, distant galaxies are moving rapidly away from us. In other words, the universe is expanding.",
+      "location": 191,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832826,
+      "text": "One could still imagine that God created the universe at the instant of the big bang, or even afterwards in just such a way as to make it look as though there had been a big bang, but it would be meaningless to suppose that it was created before the big bang.",
+      "location": 202,
+      "location_type": "location",
+      "note": "Why can\u2019t god operate outside the realm of time as Augustine suggested?",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832827,
+      "text": "theory is a good theory if it satisfies two requirements. It must accurately describe a large class of observations on the basis of a model that contains only a few arbitrary elements, and it must make definite predictions about the results of future observations.",
+      "location": 208,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832828,
+      "text": "The eventual goal of science is to provide a single theory that describes the whole universe.",
+      "location": 227,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832829,
+      "text": "Today scientists describe the universe in terms of two basic partial theories\u2014the general theory of relativity and quantum mechanics.",
+      "location": 241,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832830,
+      "text": "Unfortunately, however, these two theories are known to be inconsistent with each other\u2014they cannot both be correct. One of the major endeavors in physics today, and the major theme of this book, is the search for a new theory that will incorporate them both\u2014a quantum theory of gravity.",
+      "location": 246,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832831,
+      "text": "The big difference between the ideas of Aristotle and those of Galileo and Newton is that Aristotle believed in a preferred state of rest, which any body would take up if it were not driven by some force or impulse. In particular, he thought that the earth was at rest. But it follows from Newton\u2019s laws that there is no unique standard of rest. One could equally well say that body A was at rest and body B was moving at constant speed with respect to body A, or that body B was at rest and body A was moving.",
+      "location": 307,
+      "location_type": "location",
+      "note": "Reference frames make it so there is no such thing as an object at rest. On at rest relative to another frame",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832832,
+      "text": "supposed to travel at a fixed speed, one would have to say what that fixed speed was to be measured relative to.",
+      "location": 344,
+      "location_type": "location",
+      "note": "The speed of light is the fixed speed at which all motion can be measured objectively",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832833,
+      "text": "\u201cether\u201d that was present everywhere, even in \u201cempty\u201d space. Light waves should travel through the ether as sound waves travel through air, and",
+      "location": 345,
+      "location_type": "location",
+      "note": "I think it was the discovery of the dual nature of light as a particle and wave that allowed the ether to be disproved",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832834,
+      "text": "The fundamental postulate of the theory of relativity, as it was called, was that the laws of science should be the same for all freely moving observers, no matter what their speed. This was true for Newton\u2019s laws of motion, but now the idea was extended to include Maxwell\u2019s theory and the speed of light:",
+      "location": 359,
+      "location_type": "location",
+      "note": "Relativity unified e&m with classical mechanics",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832835,
+      "text": "E=mc2",
+      "location": 363,
+      "location_type": "location",
+      "note": "E=mc2 defines how no object with intrinsic mass can move at the speed of light, because it would take an infinite amount of energy to get it that fast, and its mass would go to infinity",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832836,
+      "text": "We must accept that time is not completely separate from and independent of space, but is combined with it to form an object called space-time.",
+      "location": 395,
+      "location_type": "location",
+      "note": "Echase space and time alike are warped by limits like large bodies of mass and speeds near the speed of light",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832837,
+      "text": "If one neglects gravitational effects, as Einstein and Poincar\u00e9 did in 1905, one has what is called the special theory of relativity.",
+      "location": 453,
+      "location_type": "location",
+      "note": "Theory of general relativity includes gravity",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832838,
+      "text": "Einstein made the revolutionary suggestion that gravity is not a force like other forces, but is a consequence of the fact that space-time is not flat, as had been previously assumed: it is curved, or \u201cwarped,\u201d by the distribution of mass and energy in it.",
+      "location": 467,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832839,
+      "text": "In general relativity, bodies always follow straight lines in four-dimensional space-time, but they nevertheless appear to us to move along curved paths in our three-dimensional space.",
+      "location": 473,
+      "location_type": "location",
+      "note": "Bodies move in a straight path with pin the curved space time (geodisic) they only appear to curve to us because we do not see space time as the 4D object that it is",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832840,
+      "text": "The difference in the speed of clocks at different heights above the earth is now of considerable practical importance, with the advent of very accurate navigation systems based on signals from satellites. If one ignored the predictions of general relativity, the position that one calculated would be wrong by several miles!",
+      "location": 507,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832841,
+      "text": "move. The nearest star, called Proxima Centauri, is found to be about four light-years away",
+      "location": 535,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832842,
+      "text": "that is similar to what we think ours must look like to someone living in another galaxy. We live in a galaxy that is about one hundred thousand light-years across and is slowly rotating; the stars in its spiral arms orbit around its center about once every several hundred million years.",
+      "location": 553,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832843,
+      "text": "It was quite a surprise, therefore, to find that most galaxies appeared red-shifted: nearly",
+      "location": 586,
+      "location_type": "location",
+      "note": "An early proof that the universe is expanding was done by Hubble who cataloged that nearly all galaxies are red shifted meaning that they are moving away from us",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832844,
+      "text": "because light rays travel through much more atmosphere when received from near the horizon than when received from directly overhead.",
+      "location": 619,
+      "location_type": "location",
+      "note": "Try to diagram this",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 24832845,
+      "text": "expansion of the universe meant that this light should be so greatly red-shifted that it would appear to us now as microwave radiation.",
+      "location": 635,
+      "location_type": "location",
+      "note": "Microwave radiation is evidence of the Big Bang. Because it is light from the initial expansion of the universe reflecting back at us equally from all directions. It is microwaves because it is so far red shifted that its wavelength enters the centimeter range",
+      "highlighted_at": "2019-06-05T04:56:00.000000Z"
+    },
+    {
+      "id": 34802805,
+      "text": "(The Catholic Church, on the other hand, seized on the big bang model and in 1951 officially pronounced it to be in accordance with the Bible.)",
+      "location": 706,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-12-29T04:56:00.000000Z"
+    },
+    {
+      "id": 34802806,
+      "text": "In general, quantum mechanics does not predict a single definite result for an observation. Instead, it predicts a number of different possible outcomes and tells us how likely each of these is.",
+      "location": 819,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-12-29T04:56:00.000000Z"
+    },
+    {
+      "id": 34802807,
+      "text": "\u201cGod does not play dice.\u201d",
+      "location": 826,
+      "location_type": "location",
+      "note": "Even Einstein saw spirituality as a higher governance",
+      "highlighted_at": "2019-12-29T04:56:00.000000Z"
+    },
+    {
+      "id": 34802808,
+      "text": "We do not yet have a complete consistent theory that unifies general relativity and quantum mechanics, but we do know a number of the features it should have.",
+      "location": 896,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-12-29T04:56:00.000000Z"
+    },
+    {
+      "id": 34802809,
+      "text": "Aristotle believed that all the matter in the universe was made up of four basic elements\u2014earth, air, fire, and water. These elements were acted on by two forces: gravity, the tendency for earth and water to sink, and levity, the tendency for air and fire to rise.",
+      "location": 901,
+      "location_type": "location",
+      "note": "Old theories are importnt to understanding how i naturally perceive the woorld ",
+      "highlighted_at": "2019-12-29T04:56:00.000000Z"
+    },
+    {
+      "id": 34802810,
+      "text": "There are a number of different varieties of quarks: there are six \u201cflavors,\u201d which we call up, down, strange, charmed, bottom, and top.",
+      "location": 933,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-12-29T04:56:00.000000Z"
+    },
+    {
+      "id": 34802811,
+      "text": "Using the wave/particle duality discussed in the last chapter, everything in the universe, including light and gravity, can be described in terms of particles.",
+      "location": 954,
+      "location_type": "location",
+      "note": "The beauty of fundmental laws is you dont need to ask how. Just why dies the law need to exist",
+      "highlighted_at": "2019-12-29T04:56:00.000000Z"
+    },
+    {
+      "id": 34802812,
+      "text": "All the known particles in the universe can be divided into two groups: particles of spin \u00bd, which make up the matter in the universe, and particles of spin 0, 1, and 2, which, as we shall see, give rise to forces between the matter particles.",
+      "location": 964,
+      "location_type": "location",
+      "note": "",
+      "highlighted_at": "2019-12-29T04:56:00.000000Z"
+    },
+    {
+      "id": 34802813,
+      "text": "Another possibility is a pair consisting of a quark and an antiquark (red + antired, or green + antigreen, or blue + antiblue = white).",
+      "location": 1057,
+      "location_type": "location",
+      "note": "The actyl world sounds  like it was crudely invented",
+      "highlighted_at": "2019-12-29T04:56:00.000000Z"
+    }
+  ]
+}
