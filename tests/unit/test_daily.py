@@ -296,8 +296,8 @@ def test_finishing_email_when_remaining_fits_in_one_email(
 
     assert len(email_sent) == 1
     assert email_sent[0]["subject"] == "Readwise: My Book — 7–10 of 10"
-    assert "Pick the next book" in email_sent[0]["html"]
-    assert "You've finished" in email_sent[0]["html"]
+    assert "Choose your next book" in email_sent[0]["html"]
+    assert "Finished" in email_sent[0]["html"]
 
     s = load_state(d / "state.json")
     assert s.current_book_id is None

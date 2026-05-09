@@ -2,20 +2,26 @@
 <html>
 <head>
 <meta charset="utf-8">
-<style>
-  body { font-family: Georgia, serif; max-width: 640px; margin: 24px auto; padding: 0 16px; line-height: 1.6; color: #1a1a1a; }
-  h2 { font-size: 18px; }
-  ul { padding-left: 20px; line-height: 1.8; }
-  p { font-size: 16px; }
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
-<p>Time to <strong>pick a book</strong> to review. Click any title to start a new cycle.</p>
-<h2><strong>Pick the next book to review:</strong></h2>
-<ul>
-{% for b in books %}
-  <li><a href="https://github.com/{{ repo }}/issues/new?title={{ ('select-book: ' ~ b.id) | urlencode }}">{{ b.title }} &mdash; {{ b.author or "" }} ({{ b.num_highlights }} highlights)</a></li>
-{% endfor %}
-</ul>
+<body style="margin: 0; padding: 0; background: #f0ebe2; font-family: Helvetica, Arial, sans-serif;">
+<div style="max-width: 620px; margin: 32px auto; background: #f0ebe2;">
+
+  <div style="background: #1a1410; padding: 36px 44px 32px; border-top: 4px solid #bf6535;">
+    <div style="font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: #bf6535; margin-bottom: 14px; font-weight: 500;">Pick a book</div>
+    <h1 style="font-family: Georgia, 'Times New Roman', serif; font-size: 27px; font-weight: 600; color: #f7f3ee; line-height: 1.3; margin: 0;">Choose your next book to review</h1>
+  </div>
+
+  <div style="background: #faf7f2; padding: 32px 44px 36px;">
+    <p style="font-family: Georgia, 'Times New Roman', serif; font-size: 16px; color: #4a3c2e; line-height: 1.6; margin: 0 0 28px 0;">Click any title below to start a new review cycle.</p>
+    {% for b in books %}
+    <a style="display: block; padding: 14px 0; border-bottom: 1px solid #e4ddd3; text-decoration: none; color: inherit;" href="https://github.com/{{ repo }}/issues/new?title={{ ('select-book: ' ~ b.id) | urlencode }}">
+      <span style="font-family: Georgia, 'Times New Roman', serif; font-size: 18px; color: #1a1410; display: block; margin-bottom: 3px;">{{ b.title }}</span>
+      <span style="font-size: 12px; color: #a0907e; letter-spacing: 0.02em;">{{ b.author or "" }}&ensp;&middot;&ensp;{{ b.num_highlights }} highlights</span>
+    </a>
+    {% endfor %}
+  </div>
+
+</div>
 </body>
 </html>

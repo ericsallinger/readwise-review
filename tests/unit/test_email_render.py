@@ -73,7 +73,7 @@ def test_finishing_email_includes_picker_with_alphabetical_books() -> None:
 def test_picker_only_email() -> None:
     email = render_picker_email(books=SAMPLE_BOOKS, repo="user/repo")
     assert email.subject == "Readwise: pick a book to review"
-    assert "Pick the next book" in email.html
+    assert "Choose your next book" in email.html
     assert "Antifragile" in email.html
     assert "The Beginning of Infinity" in email.html
 
