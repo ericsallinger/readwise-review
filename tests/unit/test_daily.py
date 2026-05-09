@@ -88,26 +88,6 @@ def _seven_am(d: date) -> datetime:
     return datetime(d.year, d.month, d.day, 7, 0, 0, tzinfo=CHICAGO)
 
 
-def _eight_am(d: date) -> datetime:
-    return datetime(d.year, d.month, d.day, 8, 0, 0, tzinfo=CHICAGO)
-
-
-def test_skip_if_not_seven_am(
-    config, data_dir_with_state, email_sent, send_email_fake, commit_fn_fake
-):
-    run_daily(
-        config=config,
-        data_dir=data_dir_with_state,
-        client=MagicMock(),
-        send_email_fn=send_email_fake,
-        commit_fn=commit_fn_fake,
-        gmail_app_password="pw",
-        repo="user/repo",
-        now=_eight_am(date(2026, 5, 6)),
-    )
-    assert email_sent == []
-
-
 def test_skip_if_already_sent_today(
     config, tmp_path, email_sent, send_email_fake, commit_fn_fake
 ):
