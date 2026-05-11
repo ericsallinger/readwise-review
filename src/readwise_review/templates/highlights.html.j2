@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body style="margin: 0; padding: 0; background: #f0ebe2; font-family: Helvetica, Arial, sans-serif;">
-<div style="max-width: 620px; margin: 32px auto; background: #f0ebe2;">
+<body style="margin: 0; padding: 0; background: #121010; font-family: Helvetica, Arial, sans-serif;">
+<div style="max-width: 620px; margin: 32px auto; background: #121010;">
 
   <div style="background: #1a1410; padding: 36px 44px 32px; border-top: 4px solid #bf6535;">
     <div style="font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: #bf6535; margin-bottom: 14px; font-weight: 500;">Today&rsquo;s highlights</div>
@@ -13,49 +13,49 @@
     {% if book.author %}<div style="font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: 16px; color: #9a8570;">{{ book.author }}</div>{% endif %}
   </div>
 
-  <div style="background: #2e261e; height: 3px;">
-    <div style="background: #bf6535; height: 3px; width: {{ (position_end / total_in_book * 100) | round(1) }}%;"></div>
+  <div style="background: #3a2e24; height: 7px;">
+    <div style="background: #d4733e; height: 7px; width: {{ (position_end / total_in_book * 100) | round(1) }}%;"></div>
   </div>
 
-  <div style="background: #faf7f2; padding: 44px 44px 36px;">
+  <div style="background: #1e1a17; padding: 44px 44px 36px;">
     {% for h in highlights %}
 
     <div style="margin-bottom: 44px;">
-      <div style="font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #bf6535; margin-bottom: 14px; font-weight: 500;">Highlight {{ loop.index }}</div>
-      <div style="font-family: Georgia, 'Times New Roman', serif; font-size: 20px; line-height: 1.75; color: #1a1410;">{{ h.text }}</div>
+      <div style="font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: #bf6535; margin-bottom: 14px; font-weight: 500;">Highlight {{ position_start + loop.index }}</div>
+      <div style="font-family: Georgia, 'Times New Roman', serif; font-size: 15px; line-height: 1.75; color: #e8e0d5;">{{ h.text }}</div>
       {% if h.location is not none %}
-      <div style="margin-top: 10px; font-size: 12px; color: #a0907e; letter-spacing: 0.04em;">{{ h.location_type | format_location }}&thinsp;{{ h.location }}</div>
+      <div style="margin-top: 10px; font-size: 9px; color: #7a6a5a; letter-spacing: 0.04em;">{{ h.location_type | format_location }}&thinsp;{{ h.location }}</div>
       {% endif %}
       {% if h.note %}
-      <div style="margin-top: 16px; padding: 12px 16px 14px; background: #f0ebe2; border-left: 3px solid #bf6535;">
-        <span style="display: block; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #bf6535; margin-bottom: 6px; font-weight: 500;">Note</span>
-        <span style="font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: 17px; line-height: 1.65; color: #4a3c2e;">{{ h.note }}</span>
+      <div style="margin-top: 16px; padding: 12px 16px 14px; background: #2a231c; border-left: 3px solid #bf6535;">
+        <span style="display: block; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: #bf6535; margin-bottom: 6px; font-weight: 500;">Note</span>
+        <span style="font-family: Georgia, 'Times New Roman', serif; font-style: italic; font-size: 13px; line-height: 1.65; color: #c8b89a;">{{ h.note }}</span>
       </div>
       {% endif %}
     </div>
 
     {% if not loop.last %}
-    <div style="text-align: center; color: #c4ac90; font-size: 16px; letter-spacing: 0.6em; padding-right: 0.6em; margin-bottom: 44px; line-height: 1;">&#183;&ensp;&#183;&ensp;&#183;</div>
+    <div style="text-align: center; color: #5a4a38; font-size: 12px; letter-spacing: 0.6em; padding-right: 0.6em; margin-bottom: 44px; line-height: 1;">&#183;&ensp;&#183;&ensp;&#183;</div>
     {% endif %}
 
     {% endfor %}
   </div>
 
-  <div style="border-top: 1px solid #e4ddd3; padding: 18px 44px 22px; background: #faf7f2; font-size: 12px; color: #a0907e; text-align: center; letter-spacing: 0.03em;">
+  <div style="border-top: 1px solid #3a2e24; padding: 18px 44px 22px; background: #1e1a17; font-size: 9px; color: #7a6a5a; text-align: center; letter-spacing: 0.03em;">
     {{ position_end }} of {{ total_in_book }} highlights &nbsp;&mdash;&nbsp; {{ remaining }} remaining
   </div>
 
   {% if is_finishing %}
   <div style="background: #1a1410; padding: 32px 44px; text-align: center; border-top: 1px solid #2e261e;">
-    <span style="font-size: 22px; color: #bf6535; display: block; margin-bottom: 12px; letter-spacing: 0.3em;">&#10022; &#10022; &#10022;</span>
-    <p style="font-family: Georgia, 'Times New Roman', serif; font-size: 19px; color: #f7f3ee; font-style: italic; line-height: 1.5; margin: 0;"><strong style="font-style: normal; font-weight: 600;">Finished:</strong> <em>{{ book.title }}</em></p>
+    <span style="font-size: 17px; color: #bf6535; display: block; margin-bottom: 12px; letter-spacing: 0.3em;">&#10022; &#10022; &#10022;</span>
+    <p style="font-family: Georgia, 'Times New Roman', serif; font-size: 14px; color: #f7f3ee; font-style: italic; line-height: 1.5; margin: 0;"><strong style="font-style: normal; font-weight: 600;">Finished:</strong> <em>{{ book.title }}</em></p>
   </div>
-  <div style="background: #faf7f2; padding: 32px 44px 36px;">
-    <div style="font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: #bf6535; font-weight: 500; margin-bottom: 22px;">Choose your next book</div>
+  <div style="background: #1e1a17; padding: 32px 44px 36px;">
+    <div style="font-size: 8px; letter-spacing: 0.22em; text-transform: uppercase; color: #bf6535; font-weight: 500; margin-bottom: 22px;">Choose your next book</div>
     {% for b in all_books %}
-    <a style="display: block; padding: 14px 0; border-bottom: 1px solid #e4ddd3; text-decoration: none; color: inherit;" href="https://github.com/{{ repo }}/issues/new?title={{ ('select-book: ' ~ b.id) | urlencode }}">
-      <span style="font-family: Georgia, 'Times New Roman', serif; font-size: 18px; color: #1a1410; display: block; margin-bottom: 3px;">{{ b.title }}</span>
-      <span style="font-size: 12px; color: #a0907e; letter-spacing: 0.02em;">{{ b.author or "" }}&ensp;&middot;&ensp;{{ b.num_highlights }} highlights</span>
+    <a style="display: block; padding: 14px 0; border-bottom: 1px solid #3a2e24; text-decoration: none; color: inherit;" href="https://github.com/{{ repo }}/issues/new?title={{ ('select-book: ' ~ b.id) | urlencode }}">
+      <span style="font-family: Georgia, 'Times New Roman', serif; font-size: 14px; color: #e8e0d5; display: block; margin-bottom: 3px;">{{ b.title }}</span>
+      <span style="font-size: 9px; color: #7a6a5a; letter-spacing: 0.02em;">{{ b.author or "" }}&ensp;&middot;&ensp;{{ b.num_highlights }} highlights</span>
     </a>
     {% endfor %}
   </div>
