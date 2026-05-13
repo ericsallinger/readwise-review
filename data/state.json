@@ -1,9 +1,9 @@
 {
-  "current_book_id": null,
-  "current_book_started_on": null,
+  "current_book_id": 57417818,
+  "current_book_started_on": "2026-05-13",
   "position": 0,
   "last_send_date": "2026-05-13",
-  "picker_email_sent_on": "2026-05-13",
+  "picker_email_sent_on": null,
   "bootstrap_consumed": true,
   "history": [
     {
