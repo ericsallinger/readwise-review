@@ -1,9 +1,9 @@
 {
-  "current_book_id": 1563373,
-  "current_book_started_on": "2026-05-19",
-  "position": 32,
-  "last_send_date": "2026-05-22",
-  "picker_email_sent_on": null,
+  "current_book_id": null,
+  "current_book_started_on": null,
+  "position": 0,
+  "last_send_date": "2026-05-25",
+  "picker_email_sent_on": "2026-05-25",
   "bootstrap_consumed": true,
   "history": [
     {
@@ -31,6 +31,15 @@
       "abandoned_at": null,
       "position_at_abandon": null,
       "highlight_count": 6,
+      "outcome": "completed"
+    },
+    {
+      "book_id": 1563373,
+      "started": "2026-05-19",
+      "finished": "2026-05-25",
+      "abandoned_at": null,
+      "position_at_abandon": null,
+      "highlight_count": 39,
       "outcome": "completed"
     }
   ]
