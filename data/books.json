@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-16T12:16:28Z",
+  "fetched_at": "2026-08-23T12:16:54Z",
   "books": [
     {
       "id": 1563373,
@@ -18,6 +18,12 @@
       "title": "A Brief History of Time",
       "author": "Stephen Hawking",
       "num_highlights": 33
+    },
+    {
+      "id": 62805007,
+      "title": "A First-Rate Madness",
+      "author": "Nassir Ghaemi",
+      "num_highlights": 1
     },
     {
       "id": 5981073,
