@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-27T15:57:41Z",
+  "fetched_at": "2026-10-04T16:07:20Z",
   "books": [
     {
       "id": 1563373,
@@ -234,6 +234,12 @@
       "title": "My Spiritual Journey",
       "author": "Dalai Lama and Sofia Stril-Rever",
       "num_highlights": 58
+    },
+    {
+      "id": 63931931,
+      "title": "Narcissism and Its Discontents",
+      "author": "Glen O. Gabbard, Holly Crisp-Han",
+      "num_highlights": 1
     },
     {
       "id": 6478814,
